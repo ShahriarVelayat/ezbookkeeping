@@ -1,6 +1,7 @@
 import { createApp, ref } from 'vue';
 import { createPinia } from 'pinia';
 import { type I18n, type Composer, createI18n } from 'vue-i18n';
+import { toPersianDate } from "./utils/date";
 
 import { createVuetify } from 'vuetify';
 import { VAlert } from 'vuetify/components/VAlert';
@@ -113,6 +114,12 @@ import '@/styles/desktop/font-size.scss';
 import '@/styles/desktop/amount-color.scss';
 
 import App from './DesktopApp.vue';
+
+declare module "@vue/runtime-core" {
+  interface ComponentCustomProperties {
+    $toPersianDate: typeof toPersianDate;
+  }
+}
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -531,5 +538,6 @@ app.component('MonthSelectionDialog', MonthSelectionDialog);
 app.component('MonthRangeSelectionDialog', MonthRangeSelectionDialog);
 app.component('AccountBalanceTrendsChart', AccountBalanceTrendsChart);
 app.component('SwitchToMobileDialog', SwitchToMobileDialog);
+app.config.globalProperties.$toPersianDate = toPersianDate;
 
 app.mount('#app');
